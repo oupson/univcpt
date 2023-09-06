@@ -100,7 +100,7 @@ func NewApp(logger *slog.Logger, icalUrl string) *App {
 
 	config := &Config{CalendarUrl: icalUrl}
 
-	re := regexp.MustCompile(`(?m)^Gr\s*(TP|TD)?\s*(\d?)(FI|ALT)$`)
+	re := regexp.MustCompile(`(?m)^(Gr\s*|ANG)(TP|TD)?\s*(\d?)(FI|ALT)$`)
 
 	return &App{
 		client: client, logger: logger, config: config, parsingRegex: re, lock: new(sync.RWMutex),

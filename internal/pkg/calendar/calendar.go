@@ -41,7 +41,7 @@ func filterCalendar(cal *ics.Calendar, re *regexp.Regexp, td string, tp string) 
 		description := strings.Replace(e.GetProperty(ics.ComponentPropertyDescription).Value, "\\n", "\n", -1)
 		matches := re.FindAllStringSubmatch(description, -1)
 		for _, match := range matches {
-			if match[3] == "ALT" && (match[1] == "" && match[2] == "" || match[1] == "TP" && match[2] == tp || match[1] == "TD" && match[2] == td) {
+			if match[4] == "ALT" && (match[2] == "" && match[3] == "" || (match[2] == "TP" || match[1] == "ANG") && match[3] == tp || match[2] == "TD" && match[3] == td) {
 				newCal.AddVEvent(e)
 				break
 			}
