@@ -34,7 +34,7 @@ func GetCalendar(client *http.Client, re *regexp.Regexp, calendarUrl string) ([]
 	}
 }
 
-func filterCalendar(cal *ics.Calendar, re *regexp.Regexp, tp string, td string) *ics.Calendar {
+func filterCalendar(cal *ics.Calendar, re *regexp.Regexp, td string, tp string) *ics.Calendar {
 	newCal := ics.NewCalendar()
 
 	for _, e := range cal.Events() {
