@@ -46,7 +46,7 @@ func (app *App) runReloadLoop() {
 }
 
 func (app *App) handleCalendar(writer http.ResponseWriter, request *http.Request) error {
-	tpNbr, err := strconv.Atoi(chi.URLParam(request, "tp"))
+	tpNbr, err := strconv.Atoi(chi.URLParam(request, "calendar"))
 	if err != nil {
 		return err
 	}
@@ -58,7 +58,7 @@ func (app *App) handleCalendar(writer http.ResponseWriter, request *http.Request
 		if app.calendars != nil {
 			writer.Header().Add("Content-Type", "text/calendar")
 			writer.WriteHeader(200)
-			if err := app.calendars[tpNbr].SerializeTo(writer); err != nil {
+			if err := app.calendars[tpNbr-1].SerializeTo(writer); err != nil {
 				return err
 			}
 		} else {
@@ -81,7 +81,7 @@ func (app *App) Run() error {
 	go app.runReloadLoop()
 
 	router := chi.NewRouter()
-	router.HandleFunc("/calendar/{tp}", func(writer http.ResponseWriter, request *http.Request) {
+	router.HandleFunc("/calendar/{calendar}", func(writer http.ResponseWriter, request *http.Request) {
 		if err := app.handleCalendar(writer, request); err != nil {
 			app.logger.Warn("error in request handler", "route", "calendar", "err", err)
 		}
